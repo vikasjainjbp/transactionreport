@@ -1,32 +1,18 @@
 package com.jpm.transaction.report.common;
 
 import com.jpm.transaction.report.model.Transaction;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class TransactionReportGeneratorTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
-    @Before
-    public void setup(){
-        System.setOut(new PrintStream(outContent));
-    }
 
     @Test
     public void testGeneratorForAllMondayToFridayWithAED_SAR() {
         new TransactionReportGenerator().generate(getListOfTransactions());
-        Assert.assertTrue(outContent.toString().contains("Day wise incoming :"));
-        Assert.assertTrue(outContent.toString().contains("Day wise outgoing :"));
-        Assert.assertTrue(outContent.toString().contains("Sorted entities based on buy instruction :"));
-
     }
 
 

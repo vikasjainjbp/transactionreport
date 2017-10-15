@@ -44,6 +44,10 @@ public class Transaction {
         return entityType;
     }
 
+    public String getEntityTypeString(){
+        return entityType.name();
+    }
+
     public void setEntityType(final EntityType entityType) {
         this.entityType = entityType;
     }
@@ -119,7 +123,7 @@ public class Transaction {
      *
      * @return the settlement date
      */
-    public Date getActualSettlementDate() {
+    public String getActualSettlementDate() {
         Date actualSettlementDate = this.settlementDate;
         final int dayIndex = getDayOfWeek(this.settlementDate);
         if ("AED".equals(this.currency) || "SAR".equals(this.currency)) {
@@ -136,7 +140,7 @@ public class Transaction {
             }
         }
 
-        return actualSettlementDate;
+        return actualSettlementDate.toString();
     }
 
     private Date addDays(Date date, int days) {

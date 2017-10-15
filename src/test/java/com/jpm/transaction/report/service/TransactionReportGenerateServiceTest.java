@@ -17,10 +17,10 @@ public class TransactionReportGenerateServiceTest {
         TransactionReportGenerateService transactionReportGenerateService = new TransactionReportGenerateService();
         final Date settledDate = new Date("02 Sep 2017");
 
-        Map<Date,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
-        Map<Date,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"B");
-        final Date settledDateForAED = new Date("03 Sep 2017");
-        final Date settledDateForSGP = new Date("04 Sep 2017");
+        Map<String,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
+        Map<String,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"B");
+        final String settledDateForAED = new Date("03 Sep 2017").toString();
+        final String settledDateForSGP = new Date("04 Sep 2017").toString();
         Assert.assertTrue(inMap.get(settledDateForAED) > 0.0);
         Assert.assertTrue(inMap.get(settledDateForSGP) > 0.0);
         Assert.assertTrue(outMap.get(settledDateForAED) > 0.0);
@@ -32,12 +32,13 @@ public class TransactionReportGenerateServiceTest {
         TransactionReportGenerateService transactionReportGenerateService = new TransactionReportGenerateService();
         final Date settledDate = new Date("01 Sep 2017");
 
-        Map<Date,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
-        Map<Date,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");final Date settledDateForAED = new Date("03 Sep 2017");
+        Map<String,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
+        Map<String,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
+        final String settledDateForAED = new Date("03 Sep 2017").toString();
         Assert.assertTrue(inMap.get(settledDateForAED) > 0.0);
-        Assert.assertTrue(inMap.get(settledDate) > 0.0);
+        Assert.assertTrue(inMap.get(settledDate.toString()) > 0.0);
         Assert.assertTrue(outMap.get(settledDateForAED) > 0.0);
-        Assert.assertTrue(outMap.get(settledDate) > 0.0);
+        Assert.assertTrue(outMap.get(settledDate.toString()) > 0.0);
     }
 
     @Test
@@ -45,21 +46,21 @@ public class TransactionReportGenerateServiceTest {
         TransactionReportGenerateService transactionReportGenerateService = new TransactionReportGenerateService();
         final Date settledDate = new Date("31 Aug 2017");
 
-        Map<Date,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
-        Map<Date,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
+        Map<String,Double> inMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
+        Map<String,Double> outMap = transactionReportGenerateService.getTotalUsdAmountSettledIncomingOrOutGoingEveryDay(getListOfTransactions(settledDate),"S");
         Assert.assertTrue(inMap.size()==1);
-        Assert.assertTrue(inMap.get(settledDate) > 0.0);
+        Assert.assertTrue(inMap.get(settledDate.toString()) > 0.0);
         Assert.assertTrue(outMap.size()==1);
-        Assert.assertTrue(outMap.get(settledDate) > 0.0);
+        Assert.assertTrue(outMap.get(settledDate.toString()) > 0.0);
     }
 
     @Test
     public void testGetSortedEntities(){
         TransactionReportGenerateService transactionReportGenerateService = new TransactionReportGenerateService();
-        Map<EntityType,Double> map = transactionReportGenerateService.getSortedEntitiesBaseOnBuyInstruction(getListOfTransactions());
+        Map<String,Double> map = transactionReportGenerateService.getSortedEntitiesBaseOnBuyInstruction(getListOfTransactions());
         Assert.assertTrue(map.size()==3);
-        Map.Entry<EntityType,Double> entry=map.entrySet().iterator().next();
-        Assert.assertEquals(EntityType.FOO,entry.getKey());
+        Map.Entry<String,Double> entry=map.entrySet().iterator().next();
+        Assert.assertEquals(EntityType.FOO.name(),entry.getKey());
     }
 
     private List<Transaction> getListOfTransactions(Date settledDate) {
